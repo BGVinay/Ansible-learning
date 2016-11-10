@@ -1,0 +1,12 @@
+---
+- hosts: CentOS
+  become: yes
+  gather_facts: no
+
+  tasks:
+  - shell: cat < /tmp/*txt
+    args:
+      executable: /bin/bash
+    register: result
+
+  - debug: var=result
