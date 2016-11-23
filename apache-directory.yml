@@ -1,0 +1,25 @@
+---
+- hosts: CentOS
+  become: true
+  become_user: root
+  vars:
+    - website_dir: /var/www/oursite.dev/web
+
+  tasks:
+  - name: install apache
+    yum: name=httpd state=latest update_cache=yes
+    notify:
+      - start apache
+
+  - name: create a website directory
+    file: dest={{ website_dir }} state=directory mode=775
+    notify:
+      - restart apache
+
+  handlers:
+    - name: start apache
+      service: name=httpd state=started
+    
+    - name: restart apache
+      service: name=httpd state=restarted
+
