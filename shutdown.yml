@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  
+  tasks:
+    - name: shutdown the remote hosts
+      command: shutdown -h now "Going down!! please save your work"
+      async: 0
+      poll: 0
+      ignore_errors: true
