@@ -1,0 +1,13 @@
+---
+- hosts: Ubuntu
+  vars:
+    - website_dir: /var/www/onesite_dir/web
+  become: true
+  become_user: root
+  
+  tasks:
+  - name: install apache2
+    apt: pkg=apache2 state=latest update_cache=yes
+
+  - name: create a directory
+    file: dest={{ website_dir }} state=directory mode=775 owner=vinay

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  strategy: debug
+  gather_facts: no
+  vars:
+    var1: 192.168.0.101
+  tasks:
+    - name: ping a host
+      ping: data={{ var2 }}
+

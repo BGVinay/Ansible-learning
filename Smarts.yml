@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  
+  tasks:
+    - name: Check the services
+      shell: sm_service show
+     
+  

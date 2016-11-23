@@ -1,0 +1,13 @@
+---
+- hosts: Ubuntu
+  become: true
+  become_user: root
+  
+  tasks:
+    - name: Install the list of softwares
+      apt: pkg={{ item }} state=latest update_cache=yes
+      with_items:
+        - nginx
+        - apache2
+        - git
+      

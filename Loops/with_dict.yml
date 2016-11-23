@@ -1,0 +1,17 @@
+---
+- hosts: Ubuntu
+  vars:
+    - users:
+        alice: 
+          name: Alice smith 
+          telephone: 1276287
+        bob: 
+          name: Bob Hamilton
+          telephone: 87162786
+
+  tasks:
+    - name: display full info
+      debug: 
+        msg: "User {{ item.key }} is {{ item.value.name }} ({{ item.value.telephone }})"
+      with_dict: "{{ users }}"
+   

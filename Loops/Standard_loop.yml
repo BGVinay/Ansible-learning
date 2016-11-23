@@ -1,0 +1,12 @@
+---
+- hosts: all
+  vars:
+    - names: ['abc123', 'def456']
+  
+  become: true
+  become_user: root
+
+  tasks:
+    - name: create users which are in vars using with_items
+      user: name={{ item }} state=absent
+      with_items: "{{ names }}"

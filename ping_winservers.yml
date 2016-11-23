@@ -1,0 +1,7 @@
+---
+- hosts: WinServer
+  become: yes
+
+  - tasks:
+    name: ping windows servers
+    - action: win_ping

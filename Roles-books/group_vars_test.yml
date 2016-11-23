@@ -1,0 +1,11 @@
+---
+- hosts: Ubuntu
+  become: true
+  become_user: root
+
+  roles:
+    - group-vars-users
+    - mivok0.users
+
+
+

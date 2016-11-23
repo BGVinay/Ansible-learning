@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+  
+  tasks:
+    - name: check for all all services
+      shell: "/usr/bin/uptime"
+      register: result
+ 
+    - debug: var=result
+    - debug: msg="System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"

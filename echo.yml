@@ -1,0 +1,5 @@
+---
+- hosts: CentOS
+  tasks:
+  - name: just echo the string
+    command: /bin/echo "Hello, How are you learning?"

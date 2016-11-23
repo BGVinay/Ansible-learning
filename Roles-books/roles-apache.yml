@@ -1,0 +1,10 @@
+---
+- hosts: CentOS
+  vars: 
+    - website_dir: /var/www/onesite-dir/web
+
+  become: true
+  become_user: root
+
+  roles:
+    - apache
