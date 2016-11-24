@@ -1,0 +1,8 @@
+---
+- hosts: WinServer
+  
+  tasks:
+    - name: Text to speech convertor & sound play
+    - win_say:
+        msg: "New software installed"
+        end_sound_path: "c:\sounds\abc.wav"
