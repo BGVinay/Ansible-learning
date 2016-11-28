@@ -1,0 +1,7 @@
+---
+# tasks file for group-vars-users
+
+- name: Create groups for user
+  group:
+    name=Ansible
+    state=present

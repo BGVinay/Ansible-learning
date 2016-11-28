@@ -1,0 +1,21 @@
+---
+# tasks file for config_mgmt
+- name: Update pacakge lists
+  yum: update_cache=yes
+
+- name: Install openssh
+  yum: name=openssh-server state=present
+
+- name: Install several pkgs at once
+  yum: name={{ item }} state=present
+  with_items:
+    - python
+    - python-dev
+    - python-virtualenv
+
+- name: create a new user called vinay
+  user: name=user shell=/bin/bash
+
+- name: copy the ssh configuration for sshd
+  template: src="sshdconfig.jinja2" dest=/etc/ssh/sshd_config
+  notify: restart sshd

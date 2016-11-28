@@ -1,0 +1,3 @@
+---
+# defaults file for apache
+website_dir: /var/www/twosite-dir/web

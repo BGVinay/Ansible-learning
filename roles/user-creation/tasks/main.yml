@@ -1,0 +1,8 @@
+---
+# tasks file for user-creation
+- name: Create users with password
+  user: name={{ item.name }} state=present shell=/bin/bash password=$6$xbhhwoLSQWH9$VtqzcVo5gUNQtM8ydRdn2vdGhpwH2adVeGQVp8miciocGpYQyPDE61mZymassySjJcuLsFb1UUSXJ53tTVIbe1
+  with_items:
+    - { name: 'Ansible1' }
+    - { name: 'Ansible2' }
+

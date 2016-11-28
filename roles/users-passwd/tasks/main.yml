@@ -1,0 +1,9 @@
+---
+users:
+  - username: "{{ item }}"
+    shell: /bin/bash 
+    password: "{{ password }}"
+    ssh-key: "{{ ssh-key-id }}"
+    with_items:
+      - Ansible1
+      - Ansible2

@@ -5,4 +5,4 @@
     - name: Text to speech convertor & sound play
     - win_say:
         msg: "New software installed"
-        end_sound_path: "c:\sounds\abc.wav"
+        end_sound_path: "/home/vinay/Downloads/A-Tone-His_Self-1266414414.wav"

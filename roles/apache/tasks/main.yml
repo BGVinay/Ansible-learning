@@ -1,0 +1,11 @@
+---
+# tasks file for apache
+- name: install apache
+  yum: name=httpd state=latest update_cache=yes
+  notify:
+    - start apache
+
+- name: create a website directory
+  file: dest={{ website_dir }} state=directory mode=775
+  notify:
+    - restart apache

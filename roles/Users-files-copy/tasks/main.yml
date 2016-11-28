@@ -1,0 +1,36 @@
+---
+# tasks file for Users-files-copy
+- name: create dummy group
+  group:
+    name=dummy
+    state=present
+
+- name: create new user
+  user:
+    name={{ user_name }}
+    state=present
+    groups="dummy"
+    shell=/bin/bash
+    password=$6$WMOlyCI5Nx6vHUyJ$wEd7CZ4qZpugxPcdxLBFjrEil7GC27dP.F0i2zttawPNbQc3JFgMSjmN16yu/futIs7Uegj9PO3Nz62iV1Hyt0
+
+- name: create new home directory for user
+  file: path=/home/{{ user_name }}/{{ item }}
+    state=directory
+    owner={{ user_name }}
+    group={{ user_name }}
+    mode=0700
+  with_items:
+    - src
+    - tmp
+    - backups
+    - bin
+    - subdir
+
+- name: copy the files to remote hosts
+  copy: src={{ item }} dest=/home/{{ user_name }}/{{ item }}
+  with_items:
+    - 10mb-file.bin
+    - second-file.mpg
+    - subdir/images.jpg
+
+

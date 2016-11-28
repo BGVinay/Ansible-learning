@@ -1,0 +1,7 @@
+#secured info
+ansible_connection=winrm
+ansible_user=pcuser
+ansible_password=pcuser
+
+ansible_winrm_server_cert_validation=ignore
+
