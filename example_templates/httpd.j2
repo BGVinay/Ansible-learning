@@ -1,0 +1,6 @@
+# Adding port number for http
+Listen {{ http_port }}
+# Adding ansible doc_dir & doc_root variables
+Alias {{ doc_dir }} {{ doc_root }}
+# Adding max_clients template variable
+MaxClients {{ max_clients }}
