@@ -1,0 +1,50 @@
+---
+## Ansible playbook to perform patching on RHEL/CentOS/Debian systems
+
+- hosts: all
+  become: vinay
+  become_user: root
+
+  tasks:
+  - name: verify if application/database processes are running or not
+    shell: if ps -eaf | egrep 'http|apache'|grep -v grep > /dev/null ;then echo 'process_running';else echo 'process_not_running';fi
+    ignore_errors: true
+    register: app_process_check
+
+    #this task is decision,play will fail/quit if application are running
+  - name: decision point to start patching
+    fail: msg="{{ inventory_hostname }} is having running Application, please stop the process before starting the patching"
+    when: app_process_check.stdout == "process_running"
+
+    #this task will upgrade/install the rpm's, if application is stopped
+  - name: upgrade all packages on teh server
+    yum: name="kernel" state=latest
+    when: app_process_check.stdout == "process_not_running" and ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+    register: yum_update
+
+    #this task is to check if update happened & whether system needs reboot
+  - name: check if reboot required after kernel uptade
+    shell: KERNEL_NEW=$(rpm -q --last kernel| head -l | awk '{print $1}' | sed 's/kernel-//'); KERNEL_NOW=$(uname -r); if [[ $KERNEL_NEW != $KERNEL_NOW ]]; then echo 'reboot_needed'; else echo 'reboot_not_needed';fi
+    ignore_errors: true
+    register: reboot_required
+
+    #this task is to restart the system
+  - name: restart system
+    command: shutdown -r +1 "Rebooting system, after OS patching"
+    async: 0
+    poll: 0
+    when: reboot_required.stdout == "reboot_needed"
+    register: reboot_started
+    ignore_errors: true
+
+    #this task is to wait for 3 minutes for system to come up after reboot
+  - name: wait for 180 secs
+    local_action:
+      module: wait_for
+        host= {{ inventory_hostname}}
+        port=22
+        delay=15
+        timeout=300
+        stae=strated
+    when: reboot_started|changed
+

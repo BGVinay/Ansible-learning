@@ -1,0 +1,19 @@
+---
+- name: Provision vagrant machines
+  hosts: localhost
+  vars:
+    box: trusty64
+  tasks:
+   - name: Create vagrant file
+     command: vagrant init {{ box }} creates=Vagranfile
+
+   - name: Bring up a vagrant server
+     command: vagrant up
+
+   - name: Add host to inventory
+     add_host: >
+       name: vagrant1
+       ansible_ssh_host: 192.168.0.104
+       ansible_ssh_port: 22
+       ansible_ssh_user: vinay
+       ansible_ssh_private_key_file: /Users/vinay/.vagrant.d/insecure_private_key
