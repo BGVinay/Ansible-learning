@@ -13,4 +13,4 @@ dbservers
 
 [datacenter:vars]
 ansible_ssh_user=vinay
-ansible_ssh_pass=vinay
+ansible_ssh_pass=cluster

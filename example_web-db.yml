@@ -34,11 +34,14 @@
 
 - hosts: db1
   sudo: yes
+  
   tasks:
   - name: Ensure MySQL is installed
-    yum: name=mysql-server state=latest
+    apt: name=mysql-server state=latest
+    when: ansible_os_family == "Debian"
+
   - name: Ensure MySQL service is started
-    service: name=mysqld state=started
+    service: name=mysql state=started
 
 - hosts: webservers:dbservers
   sudo: yes
